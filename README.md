@@ -47,6 +47,8 @@ GND               GND
 ```
 > ⚠️ Ensure your GPS and OLED modules support 3.3V logic (XIAO runs at 3.3V natively).
 
+![Seeeduino XIAO Pinout](docs/xiao-pinout.png)
+
 ---
 
 ## Intended Use
