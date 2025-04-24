@@ -1,4 +1,4 @@
-# Arduino GPS Tracker – Phase One: UTM Tracker
+# Arduino GPS Tracker – Version One: UTM Tracker
 
 ## Overview
 
@@ -12,7 +12,7 @@ Ideal for those who use traditional map-and-compass navigation and simply want a
 
 ✅ Displays UTM Easting and Northing  
 ✅ Cold boot checklist on OLED screen  
-⬜ Fits inside an Altoids tin (WIP)
+⬜ Fits inside an Altoids tin (WIP)  
 ✅ Powered by external USB battery bank  
 ✅ Zero-button interface, zero configuration  
 
@@ -60,7 +60,7 @@ GND               GND
 
 ---
 
-## Out-of-Scope for Phase One
+## Out-of-Scope for Version One
 - ❌ Logging or GPX saving
 - ❌ Buttons, menus, or interaction
 - ❌ Altitude, heading, or speed
@@ -70,12 +70,13 @@ GND               GND
 
 ---
 
-## Future Phases (Optional Ideas)
+## Future Versions (Optional Ideas)
 - Waypoint memory (5-slot rolling buffer)
-- Rechargeable battery + solar option
+- Rechargeable internal battery + solar option
 - Custom rugged case or wristband housing
 - Sleep mode
 - Button-controlled UI for cycling views
+- E-ink screen
 
 ---
 
