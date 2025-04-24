@@ -2,7 +2,7 @@
 
 ## Overview
 
-![Static Badge](https://img.shields.io/badge/version-v1.0-blue)   
+![Static Badge](https://img.shields.io/badge/version-v1.1-blue)   
 This project is the first phase of a lightweight, low-power GPS coordinate viewer for backpackers. ~~Designed to fit inside an Altoids tin and~~ powered by a USB battery bank, the device provides **real-time UTM (Universal Transverse Mercator) coordinates** with no extra features or fluff.    Built by a backpacker, for backpackers. Lightweight, no-nonsense tools for analog-first navigation.
 
 Ideal for those who use traditional map-and-compass navigation and simply want a quick UTM reference without logging, direction, or touchscreen interaction.   
@@ -67,6 +67,8 @@ GND               GND
 
 ## Changelog   
 
+### V1.1
+- Added a lite version and a full version, with a boot logo added for start
 ### V1.0
 - Initial version release.
 
