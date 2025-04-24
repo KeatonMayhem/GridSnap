@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is Phase One of a compact Arduino-based GPS watch project, designed to display **real-time UTM coordinates** on a small OLED screen. It is designed to fit inside an Altoids tin for prototyping and portability.
+This is Phase One of a compact Arduino-based GPS tracker project, designed to display **real-time UTM coordinates** on a small OLED screen. It is designed to fit inside an Altoids tin for prototyping and portability.
 
 ## Features
 
