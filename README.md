@@ -1,28 +1,38 @@
-# Arduino GPS Watch – Phase One: UTM Tracker (Altoids Tin Edition)
+# Arduino GPS Tracker – Phase One: UTM Tracker (Altoids Tin Edition)
 
 ## Overview
 
-This project is the first phase of an Arduino-based GPS tracking watch housed in an Altoids tin. The goal is to create a compact, self-contained device that displays **real-time UTM (Universal Transverse Mercator) coordinates** using a GPS module and OLED screen.
+This is Phase One of a compact Arduino-based GPS watch project, designed to display **real-time UTM coordinates** on a small OLED screen. It is designed to fit inside an Altoids tin for prototyping and portability.
 
-Phase One is focused on foundational functionality:
-- Acquiring GPS data via UART
-- Parsing and converting to UTM format
-- Displaying live coordinates on a 0.96" OLED screen
+## Features
 
-## Hardware Bill of Materials (BOM)
+✅ Acquires GPS signal via NEO-6M  
+✅ Converts coordinates to UTM format  
+✅ Displays Easting (X) and Northing (Y) in large font  
+✅ Displays local time and date from GPS data  
+⬜ Future features include waypoints, button interaction, and logging
+
+## Bill of Materials (BOM)
 
 | Component | Description | Link |
 |----------|-------------|------|
-| **Microcontroller** | [Seeeduino XIAO SAMD21](https://www.amazon.com/Seeeduino-Smallest-Microcontroller-Interfaces-Compatible/dp/B08745JBRP?th=1) - Ultra compact Arduino-compatible board with USB-C and enough IO for GPS and OLED | [Amazon](https://www.amazon.com/Seeeduino-Smallest-Microcontroller-Interfaces-Compatible/dp/B08745JBRP?th=1) |
-| **GPS Module** | [GY-NEO6MV2 with Antenna (NEO-6M)](https://www.amazon.com/GY-NEO6MV2-NEO-6M-Control-Antenna-NEO6MV2/dp/B0B49LB18G/) - Standard GPS module with UART output, used for coordinate tracking | [Amazon](https://www.amazon.com/GY-NEO6MV2-NEO-6M-Control-Antenna-NEO6MV2/dp/B0B49LB18G/) |
-| **Display** | [0.96" OLED Display (128x64, I2C)](https://www.amazon.com/Hosyond-Display-Self-Luminous-Compatible-Raspberry/dp/B09T6SJBV5/) - Monochrome screen for UTM output and basic interface | [Amazon](https://www.amazon.com/Hosyond-Display-Self-Luminous-Compatible-Raspberry/dp/B09T6SJBV5/) |
+| **Microcontroller** | [Seeeduino XIAO SAMD21](https://www.amazon.com/Seeeduino-Smallest-Microcontroller-Interfaces-Compatible/dp/B08745JBRP?th=1) – Compact SAMD21 board with USB-C | [Amazon](https://www.amazon.com/Seeeduino-Smallest-Microcontroller-Interfaces-Compatible/dp/B08745JBRP?th=1) |
+| **GPS Module** | [GY-NEO6MV2 GPS (NEO-6M)](https://www.amazon.com/GY-NEO6MV2-NEO-6M-Control-Antenna-NEO6MV2/dp/B0B49LB18G/) – Serial GPS module with antenna | [Amazon](https://www.amazon.com/GY-NEO6MV2-NEO-6M-Control-Antenna-NEO6MV2/dp/B0B49LB18G/) |
+| **Display** | [0.96" OLED Display (I2C, 128x64)](https://www.amazon.com/Hosyond-Display-Self-Luminous-Compatible-Raspberry/dp/B09T6SJBV5/) – For displaying UTM coordinates | [Amazon](https://www.amazon.com/Hosyond-Display-Self-Luminous-Compatible-Raspberry/dp/B09T6SJBV5/) |
 
-## Scope – Phase One
+## Wiring
 
-- ✅ Display current UTM coordinates in real-time
-- ✅ Fit entire unit in an Altoids tin (prototype format)
-- ⬜ Add physical interface (button for mode switch or refresh)
-- ⬜ Power via USB (eventually migrate to battery)
-- ⬜ Minimal footprint wiring and breadboarding for prototyping
+```text
+XIAO SAMD21       GPS (NEO-6M)
+----------------  ------------
+TX (D6)           RX
+RX (D7)           TX
+GND               GND
+3.3V              VCC
 
-This is a working prototype to prove the data pipeline from GPS module → Microcontroller → OLED, all while focusing on UTM coordinate formatting.
+XIAO SAMD21       OLED Display (I2C)
+----------------  ------------------
+D4 (SDA)          SDA
+D5 (SCL)          SCL
+GND               GND
+3.3V              VCC
