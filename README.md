@@ -1,8 +1,7 @@
-# GridSnap
+# ![gridsnap](docs/gridsnap_logo.png)<br>![Static Badge](https://img.shields.io/badge/version-v1.1-blue) 
 
 ## Overview
-
-![Static Badge](https://img.shields.io/badge/version-v1.0-blue)   
+  
 This project is the first phase of a lightweight, low-power GPS coordinate viewer for backpackers. ~~Designed to fit inside an Altoids tin and~~ powered by a USB battery bank, the device provides **real-time UTM (Universal Transverse Mercator) coordinates** with no extra features or fluff.    Built by a backpacker, for backpackers. Lightweight, no-nonsense tools for analog-first navigation.
 
 Ideal for those who use traditional map-and-compass navigation and simply want a quick UTM reference without logging, direction, or touchscreen interaction.   
@@ -19,6 +18,17 @@ Ideal for those who use traditional map-and-compass navigation and simply want a
 ⬜ Fits inside an Altoids tin (WIP)  
 ✅ Powered by external USB battery bank  
 ✅ Zero-button interface, zero configuration  
+
+Approximate time-to-first-fix (TTFF) for Neo-6M:
+
+
+| Boot Type | Time to Lock | Notes |
+|----------|-------------|------|
+| Cold Start	| 30–60 seconds	| No recent satellite info
+| Warm Start	| 10–30 seconds |	Last fix was recent (~hours)
+| Hot Start |	1–5 seconds	| Power cycled, still has satellite almanac   
+> Indoors or obstructed = longer   
+> First-ever power-up can take a full minute or more
 
 ---
 
@@ -67,18 +77,21 @@ GND               GND
 
 ## Changelog   
 
+### V1.1
+- Added a lite version and a full version, with a boot logo added for start
 ### V1.0
 - Initial version release.
 
 ---
 
-## Out-of-Scope for Version One
+## Out-of-Scope for Version 1
 - ❌ Logging or GPX saving
 - ❌ Buttons, menus, or interaction
 - ❌ Altitude, heading, or speed
 - ❌ Waterproofing / ruggedization
 - ❌ Internal battery
 - ❌ E-ink screen
+- ❌ Install Guide
 
 ---
 
