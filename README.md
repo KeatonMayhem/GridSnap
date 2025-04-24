@@ -1,8 +1,9 @@
-# Arduino GPS Tracker – Version One: UTM Tracker
+# GridSnap
 
 ## Overview
 
-This project is the first phase of a lightweight, low-power GPS coordinate viewer for backpackers. ~~Designed to fit inside an Altoids tin and~~ powered by a USB battery bank, the device provides **real-time UTM (Universal Transverse Mercator) coordinates** with no extra features or fluff.
+![Static Badge](https://img.shields.io/badge/version-v1.0-blue)   
+This project is the first phase of a lightweight, low-power GPS coordinate viewer for backpackers. ~~Designed to fit inside an Altoids tin and~~ powered by a USB battery bank, the device provides **real-time UTM (Universal Transverse Mercator) coordinates** with no extra features or fluff.    Built by a backpacker, for backpackers. Lightweight, no-nonsense tools for analog-first navigation.
 
 Ideal for those who use traditional map-and-compass navigation and simply want a quick UTM reference without logging, direction, or touchscreen interaction.
 
@@ -55,8 +56,16 @@ GND               GND
 - Backpacking and wilderness navigation
 - Rapid reference UTM coordinate readout
 - Plug-and-glance behavior
+- Cost effective alternative to commercial options 
 
 > This tool is not designed for real-time navigation, route planning, or speed tracking. It is a modern complement to traditional orienteering.
+
+---
+
+## Changelog   
+
+### V1.0
+- Initial version release.
 
 ---
 
@@ -86,4 +95,4 @@ This project is open source under the MIT License.
 ---
 
 ## Author
-Built by a backpacker, for backpackers. Lightweight, no-nonsense tools for analog-first navigation.
+GridSnap created by KeatonMayhem (C) 2025
