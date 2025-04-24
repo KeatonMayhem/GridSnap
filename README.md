@@ -19,6 +19,17 @@ Ideal for those who use traditional map-and-compass navigation and simply want a
 ✅ Powered by external USB battery bank  
 ✅ Zero-button interface, zero configuration  
 
+Approximate time-to-first-fix (TTFF) for Neo-6M:
+
+
+| Boot Type | Time to Lock | Notes |
+|----------|-------------|------|
+| Cold Start	| 30–60 seconds	| No recent satellite info
+| Warm Start	| 10–30 seconds |	Last fix was recent (~hours)
+| Hot Start |	1–5 seconds	| Power cycled, still has satellite almanac   
+> Indoors or obstructed = longer   
+> First-ever power-up can take a full minute or more
+
 ---
 
 ## Bill of Materials (BOM)
