@@ -5,7 +5,10 @@
 ![Static Badge](https://img.shields.io/badge/version-v1.0-blue)   
 This project is the first phase of a lightweight, low-power GPS coordinate viewer for backpackers. ~~Designed to fit inside an Altoids tin and~~ powered by a USB battery bank, the device provides **real-time UTM (Universal Transverse Mercator) coordinates** with no extra features or fluff.    Built by a backpacker, for backpackers. Lightweight, no-nonsense tools for analog-first navigation.
 
-Ideal for those who use traditional map-and-compass navigation and simply want a quick UTM reference without logging, direction, or touchscreen interaction.
+Ideal for those who use traditional map-and-compass navigation and simply want a quick UTM reference without logging, direction, or touchscreen interaction.   
+
+> ⚠️ This project depends on the UTMConversion library by Rafael Reyes Carmona (GPL licensed).
+> You must install it manually: [https://github.com/RafaelReyesCarmona/UTMConversion](https://github.com/RafaelReyesCarmona/UTMConversion)
 
 ---
 
