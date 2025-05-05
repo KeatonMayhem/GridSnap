@@ -8,7 +8,7 @@
 ###                                                              
 ###  Created by KeatonMayhem (C) 2025
 ###  https://github.com/KeatonMayhem
-###  version 1.1
+###  version 1.2
 */
 
 #include <Adafruit_GFX.h>
