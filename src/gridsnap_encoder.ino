@@ -8,18 +8,21 @@
 ###                                                              
 ###  Created by KeatonMayhem (C) 2025
 ###  https://github.com/KeatonMayhem
-###  version 2.0
+###  version 2.1
+### Added EEPROM saving of waypoint
 */
 
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+//#include <SoftwareSerial.h>
 #include <UTMConversion.h>
 #include <TinyGPSPlus.h>
 #include <Wire.h>
 #include <Encoder.h>
+#include <FlashStorage.h>
 #include "graphics.h"
 
-
+#define gpsSerial Serial1
 
 
 // === Screen Config ===
@@ -27,8 +30,6 @@
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define OLED_RST_PIN -1
-
-#define gpsSerial Serial1
 
 // Rotary encoder pins
 #define ENCODER_PIN_A 2
@@ -66,13 +67,23 @@ unsigned long fixTime = 0;
 float currentLat = 0.0;
 float currentLon = 0.0;
 
+// === Waypoint Tracking ===
+struct Waypoint {
+  float lat;
+  float lon;
+};
+
+FlashStorage(savedWaypoint, Waypoint);
+Waypoint waypoint = {-1, -1};
+bool hasWaypoint = false;
+
 float waypointLat = 0.0;
 float waypointLon = 0.0;
 bool waypointActive = false;
 
 const unsigned long LONG_PRESS_TIME = 1000;
-bool buttonHeld = false;
-unsigned long buttonPressStart = 0;
+unsigned long lastButtonPress = 0;
+bool encoderPressed = false;
 bool waypointSet = false;
 
 // === Display Helpers ===
@@ -109,33 +120,6 @@ void showAcquiringAnimation() {
       gps.encode(gpsSerial.read());
     }
   }
-}
-
-void saveWaypoint() {
-  if (gps.location.isValid()) {
-    waypointLat = gps.location.lat();
-    waypointLon = gps.location.lng();
-    waypointActive = true;
-    Serial.println("Waypoint saved.");
-  }
-}
-
-void checkEncoderButton() {
-  static bool lastButtonState = HIGH;
-  bool currentButtonState = digitalRead(ENCODER_BTN_PIN);
-
-  if (lastButtonState == HIGH && currentButtonState == LOW) {
-    // Button just pressed
-    buttonPressStart = millis();
-    buttonHeld = false;
-  } else if (lastButtonState == LOW && currentButtonState == LOW) {
-    // Button is being held
-    if (!buttonHeld && (millis() - buttonPressStart >= LONG_PRESS_TIME)) {
-      saveWaypoint();
-      buttonHeld = true;
-    }
-  }
-  lastButtonState = currentButtonState;
 }
 
 void displayUTMScreen(float lat, float lon) {
@@ -208,33 +192,23 @@ void displayWaypointScreen() {
   display.setTextSize(1);
   display.setCursor(0, 0);
   display.println("Waypoint Tracker");
-
-  if (waypointActive && gps.location.isValid()) {
-    double distance = TinyGPSPlus::distanceBetween(
-        gps.location.lat(), gps.location.lng(), waypointLat, waypointLon);
-    double course = TinyGPSPlus::courseTo(
-        gps.location.lat(), gps.location.lng(), waypointLat, waypointLon);
-
-    utm.UTM(waypointLat, waypointLon);
-
+  if (hasWaypoint) {
+    double distance = TinyGPSPlus::distanceBetween(currentLat, currentLon, waypoint.lat, waypoint.lon);
+    double course = TinyGPSPlus::courseTo(currentLat, currentLon, waypoint.lat, waypoint.lon);
     display.setCursor(0, 16);
-    display.printf("Dist: %.1f m", distance);
-
+    display.printf("Dist: %.1fm", distance);
     display.setCursor(0, 28);
     display.printf("Bear: %.1f deg", course);
 
+    utm.UTM(waypoint.lat, waypoint.lon);
     display.setCursor(0, 40);
-    display.printf("UTM: %d%s", utm.zone(), utm.band());
-
+    display.printf("UTM: %07dE", utm.X());
     display.setCursor(0, 52);
-    display.printf("%07d E", utm.X());
-    display.setCursor(64, 52);
-    display.printf("%07d N", utm.Y());
+    display.printf("     %07dN", utm.Y());
   } else {
-    display.setCursor(0, 20);
-    display.println("No waypoint set.");
+    display.setCursor(0, 16);
+    display.println("(No waypoint)");
   }
-
   display.display();
 }
 
@@ -245,22 +219,23 @@ void setup() {
 
   pinMode(ENCODER_BTN_PIN, INPUT_PULLUP);
 
+
   display.begin(SSD1306_SWITCHCAPVCC, SCREEN_I2C_ADDR);
   showBootLogo();
   showMessage("Connecting to GPS...");
   bootTime = millis();
 
   showAcquiringAnimation();  // Wait until we get a valid GPS fix
+  waypoint = savedWaypoint.read();
+  if (waypoint.lat != -1 && waypoint.lon != -1) hasWaypoint = true;
 }
 
 // === Main Loop ===
 void loop() {
-  // Read GPS data
   while (gpsSerial.available()) {
     gps.encode(gpsSerial.read());
   }
 
-  // Update stored coordinates if new data is available
   if (gps.location.isUpdated()) {
     currentLat = gps.location.lat();
     currentLon = gps.location.lng();
@@ -274,23 +249,36 @@ void loop() {
     }
   }
 
-  // Rotary encoder handling
   int newPosition = knob.read() / 4;
   if (newPosition != lastPosition) {
     screenIndex = (screenIndex + (newPosition > lastPosition ? 1 : -1) + NUM_SCREENS) % NUM_SCREENS;
     lastPosition = newPosition;
   }
 
-  // 🆕 Check for long-press on encoder button
-  checkEncoderButton();
+  // Check for encoder press (assumes connected to digitalRead capable pin)
+  int buttonState = digitalRead(4); // adjust to actual encoder button pin
+  if (buttonState == LOW) {
+    if (!encoderPressed) {
+      encoderPressed = true;
+      lastButtonPress = millis();
+    }
+    if (millis() - lastButtonPress > 1000 && gps.location.isValid()) {
+      waypoint.lat = currentLat;
+      waypoint.lon = currentLon;
+      savedWaypoint.write(waypoint);
+      hasWaypoint = true;
+      showMessage("Waypoint Saved");
+      delay(1000);
+    }
+  } else {
+    encoderPressed = false;
+  }
 
-  // If GPS is invalid, show animation
   if (!gps.location.isValid()) {
     showAcquiringAnimation();
     return;
   }
 
-  // Display screen based on index using stored lat/lon
   switch (screenIndex) {
     case 0:
       displayUTMScreen(currentLat, currentLon);
@@ -306,5 +294,5 @@ void loop() {
       break;
   }
 
-  delay(200);  // Reduce flicker and CPU load
+  delay(200);
 }
