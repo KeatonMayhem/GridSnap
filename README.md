@@ -101,7 +101,8 @@ GND               GND
 - Custom rugged case or wristband housing
 - Sleep mode
 - Button-controlled UI for cycling views
-- E-ink screen
+- E-ink support
+- Switch between UTM and lat/long measurement scale
 
 ---
 
